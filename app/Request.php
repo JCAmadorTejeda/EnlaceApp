@@ -5,10 +5,14 @@ namespace App;
 use App\User;
 use App\RequestStatus;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Request extends Model
 {
+    use SoftDeletes;
+    
     protected $primaryKey = 'id_request';
+    protected $dates = ['deleted_at'];
     /**
      * @var array
      */

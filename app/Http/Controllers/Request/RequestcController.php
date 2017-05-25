@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Request;
 
-use Illuminate\Http\Request;
+use App\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 
-class RequestController extends Controller
+class RequestcController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,8 @@ class RequestController extends Controller
      */
     public function index()
     {
-        //
+        $request = Request::all();
+        return $this->showAll($request);
     }
 
     /**
@@ -41,21 +43,21 @@ class RequestController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        return $this->showOne($request);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
         //
     }
@@ -64,10 +66,10 @@ class RequestController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $requestR, Request $request)
     {
         //
     }
@@ -75,10 +77,10 @@ class RequestController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
     }

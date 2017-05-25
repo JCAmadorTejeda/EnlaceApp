@@ -4,9 +4,9 @@ namespace App\Http\Controllers\User;
 
 use App\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 
-class UserController extends Controller
+class UserController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class UserController extends Controller
     {
         $usuarios = User::all();
 
-        return response()->json(['data' => $usuarios], 200);
+        return $this->showAll($usuarios);
     }
 
     /**
@@ -51,7 +51,7 @@ class UserController extends Controller
         $campos['admin'] = User::USUARIO_NO_ADMINISTRADOR;
         $campos['api_key'] = User::generarToken();
         $usuario = User::create($campos);
-        return response()->json(['data' => $usuario, 201]);
+        return $this->showOne($usuario, 201);
     }
 
     /**
@@ -60,11 +60,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        $usuario = User::findOrFail($id);
-
-        return response()->json(['data' => $usuario], 200);
+        return $this->showOne($user);
     }
 
     /**
@@ -85,17 +83,16 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        $user = User::findOrFail($id);
-
         $rules = [
-            'password' => 'required',
+            'password' => 'min:5',
             'admin' => 'in:' . User::USUARIO_ADMINISTRADOR . ',' . User::USUARIO_NO_ADMINISTRADOR,
-            'id_status' => 'in:' . User::EMPLEADO_ACTIVO . ',' . User::EMPLEADO_INACTIVO,
+            'status' => 'in:' . User::EMPLEADO_ACTIVO . ',' . User::EMPLEADO_INACTIVO,
         ];
 
         $this->validate($request, $rules);
+
         if($request->has('id_employee')){
             $user->id_employee = $request->id_employee;
         }
@@ -108,9 +105,17 @@ class UserController extends Controller
             $user->admin = $request->admin;
         }
 
-        if($request->has('id_status')){
-            $user->id_status = $request->id_status;
+        if($request->has('status')){
+            $user->status = $request->status;
         }
+
+        if (!$user->isDirty()) {
+            return errorResponse('Se debe especificar al menos un valor diferente para actualizar', 422);
+        }
+
+        $user->save();
+
+        return $this->showOne($user);
 
     }
 
@@ -120,8 +125,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return $this->showOne($user);
     }
 }

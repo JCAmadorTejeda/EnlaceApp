@@ -17,6 +17,7 @@ class CreateRequestStatusesTable extends Migration
             $table->increments('id_status')->unsigned();
             $table->string('nombre');
             $table->timestamps();
+            $table->softDeletes();
 
         });
     }

@@ -12,8 +12,19 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+/**
+* Users
+*/
 Route::resource('users', 'User\UserController');
+Route::resource('users.requests', 'User\UserRequestController', ['only' => 'index']);
+/**
+* RequestStatus
+*/
+Route::resource('requeststatus', 'Request\RequestStatusController');
 
-Route::resource('requeststatus', 'Request\RequestStatusController', ['only' => ['index', 'show']]);
+/**
+* Request
+*/
+Route::resource('requests', 'Request\RequestcController');
 
-Route::resource('requests', 'Request\RequestController', ['only' => ['index', 'show']]);

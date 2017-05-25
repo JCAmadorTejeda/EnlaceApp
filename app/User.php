@@ -4,11 +4,12 @@ namespace App;
 
 use App\Request;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, SoftDeletes;
 
     protected $primaryKey = 'id_employee';
     public $incrementing = false;
@@ -16,6 +17,8 @@ class User extends Authenticatable
     const USUARIO_NO_ADMINISTRADOR = 'false';
     const EMPLEADO_ACTIVO = '1';
     const EMPLEADO_INACTIVO = '0';
+
+    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that should be hidden for arrays.

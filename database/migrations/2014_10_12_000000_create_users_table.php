@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('status')->default(User::EMPLEADO_ACTIVO);
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->primary('id_employee');
         });

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Request;
 
+use App\RequestStatus;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Traits\errorResponse;
+use App\Http\Controllers\ApiController;
 
-class RequestStatusController extends Controller
+class RequestStatusController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +16,9 @@ class RequestStatusController extends Controller
      */
     public function index()
     {
-        //
+        $status = RequestStatus::all();
+
+        return $this->showAll($status);
     }
 
     /**
@@ -35,7 +39,17 @@ class RequestStatusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'nombre' => 'required',
+        ];
+
+        $this->validate($request, $rules);
+
+        $campos = $request->all();
+
+        $campos['nombre'] = $request->nombre;
+        $status = RequestStatus::create($campos);
+        return $this->showOne($status, 201);
     }
 
     /**
@@ -46,7 +60,9 @@ class RequestStatusController extends Controller
      */
     public function show($id)
     {
-        //
+        $status = RequestStatus::findOrFail($id);
+
+        return $this->showOne($status);
     }
 
     /**
@@ -69,7 +85,27 @@ class RequestStatusController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $status = RequestStatus::findOrFail($id);
+
+        $rules = [
+            'nombre' => 'min:3',
+        ];
+
+        $this->validate($request, $rules);
+
+
+        if($request->has('nombre')){
+            $status->nombre = $request->nombre;
+        }
+        
+        if (!$status->isDirty()) {
+            return $this->errorResponse('Se debe especificar al menos un valor diferente para actualizar', 422);
+        }
+
+        $status->save();
+
+        return $this->showOne($status, 201);
+
     }
 
     /**
@@ -80,6 +116,8 @@ class RequestStatusController extends Controller
      */
     public function destroy($id)
     {
-        //
+       /* $status = RequestStatus::findOrFail($id);
+        $status->delete();
+        return response()->json(['data' => $status], 200);*/
     }
 }

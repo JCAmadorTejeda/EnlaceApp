@@ -27,6 +27,7 @@ class CreateRequestsTable extends Migration
             $table->string('longitud');
             $table->string('img_ruta');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('id_employee')->references('id_employee')->on('users');
             $table->foreign('id_status')->references('id_status')->on('requeststatus');
