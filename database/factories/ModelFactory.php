@@ -1,8 +1,8 @@
 <?php
 
 use App\User;
-use App\Request;
 use App\RequestStatus;
+use App\InstallRequest;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +35,7 @@ $factory->define(RequestStatus::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(Request::class, function (Faker\Generator $faker) {
+$factory->define(InstallRequest::class, function (Faker\Generator $faker) {
     static $password;
 
     return [

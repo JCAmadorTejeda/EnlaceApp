@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Request;
+use App\InstallRequest;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -46,9 +46,9 @@ class User extends Authenticatable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function requests()
+    public function installRequests()
     {
-        return $this->hasMany(Request::class, 'id_employee', 'id_employee');
+        return $this->hasMany(InstallRequest::class, 'id_employee', 'id_employee');
     }
 
     /**

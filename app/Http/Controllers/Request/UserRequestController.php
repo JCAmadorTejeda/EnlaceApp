@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Request;
 
 use App\User;
-use App\Request;
+use App\InstallRequest;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ApiController;
 
@@ -16,7 +17,8 @@ class UserRequestController extends ApiController
      */
     public function index(User $user)
     {
-        $requests = $user->requests()->where('id_status','=', 3)->get();
+        $requests = $user->InstallRequests()->get();
         return $this->showAll($requests);
     }
+
 }

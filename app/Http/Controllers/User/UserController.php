@@ -93,9 +93,9 @@ class UserController extends ApiController
 
         $this->validate($request, $rules);
 
-        if($request->has('id_employee')){
+        /*if($request->has('id_employee')){
             $user->id_employee = $request->id_employee;
-        }
+        }*/
 
         if($request->has('password')){
             $user->password = bcrypt($request->password);

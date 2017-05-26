@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 * Users
 */
 Route::resource('users', 'User\UserController');
-Route::resource('users.requests', 'User\UserRequestController', ['only' => 'index']);
+//Route::resource('users.installrequests', 'User\UserRequestController');
 /**
 * RequestStatus
 */
@@ -26,5 +26,6 @@ Route::resource('requeststatus', 'Request\RequestStatusController');
 /**
 * Request
 */
-Route::resource('requests', 'Request\RequestcController');
+Route::resource('installrequests', 'Request\InstallRequestController');
+Route::resource('users.installrequests', 'Request\UserRequestController');
 

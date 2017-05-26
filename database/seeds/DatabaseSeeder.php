@@ -1,8 +1,8 @@
 <?php
 
 use App\User;
-use App\Request;
 use App\RequestStatus;
+use App\InstallRequest;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\statement;
 use Illuminate\Support\Facades\DB;
@@ -23,8 +23,8 @@ class DatabaseSeeder extends Seeder
         Schema::dropIfExists('requests');
         Schema::dropIfExists('requeststatus');*/
         User::truncate();
+        InstallRequest::truncate();
         RequestStatus::truncate();
-        Request::truncate();
 
         $cantidadEmployyes = 20;
         $cantidadUsers = 20;
@@ -33,6 +33,6 @@ class DatabaseSeeder extends Seeder
 
         factory(User::class, $cantidadUsers)->create();
         factory(RequestStatus::class, $cantidadRequestStatus)->create();
-        factory(Request::class, $cantidadRequests)->create();
+        factory(InstallRequest::class, $cantidadRequests)->create();
     }
 }

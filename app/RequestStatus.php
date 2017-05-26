@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Request;
+use App\InstallRequest;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -29,6 +29,6 @@ class RequestStatus extends Model
      */
     public function requests()
     {
-        return $this->hasMany(Request::class, 'id_status', 'id_status');
+        return $this->hasMany(InstallRequest::class, 'id_status', 'id_status');
     }
 }
